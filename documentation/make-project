@@ -1,0 +1,6 @@
+How to make the project
+-----------------------
+
+These instructions require GNU Make or another Make clone -- your system likely
+has one. Because the index is created using a python script, you also need
+python.

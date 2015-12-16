@@ -1,0 +1,78 @@
+
+
+
+Latex Style
+-----------
+
+Obviously you can argue about this forever. Some of these rules have to do with
+readability of the latex files and some have to do with the overal setup of the
+project as well as the tags system (which is discussed elsewhere).
+
+* Every line has at most 80 characters
+
+* The following are on a line by themselves
+	\begin{...}
+	\end{...}
+	\label{...}
+	\title{...}
+	$$
+
+* The following are flush left
+	\item
+	\xymatrix
+	\medskip
+	\section
+	\subsection
+	\subsubsection
+	\phantomsection
+
+* Every environment of the type
+	'lemma', 'proposition', 'theorem', 'remark', 'remarks',
+	'example', 'exercise', 'situation', 'equation', 'definition'
+is labeled. In fact every such environment starts with the following
+two lines
+\begin{<env>}
+\label{<short>}
+
+* There are no nested environments, except the 'equation' and 'reference'
+environments are allowed inside other environments.
+
+* Every environment of the type
+	'lemma', 'proposition', 'theorem'
+has a proof.
+
+* Every 'section', 'subsection', 'subsubsection', 'phantomsection' has a
+label which is defined on the next line.
+
+* If an item has a label it is defined on the line following the \item macro.
+
+* Every definition defines something. The terms being defined are found
+by looking for the patterns {\it ...}. You can have multiple defines in a
+definition block.
+
+* Proofs do not refer to results later in the stacks project. They also do not
+refer to the result itself.
+
+* We do not use the long label to refer to something inside the same chapter.
+
+* Every chapter starts with
+
+\input{preamble}
+\begin{document}
+\title{...}
+\maketitle
+\phantomsection
+\label{section-phantom}
+\tableofcontents
+
+* Every chapter ends with
+
+\input{chapters}
+\bibliography{my}
+\bibliographystyle{amsalpha}
+\end{document}
+
+* Every chapter has at least one citation. (Otherwise this causes bibtex to
+breaks)
+
+* No footnotes in math mode
