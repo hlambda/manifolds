@@ -1,3 +1,3 @@
-# latex-skeleton
+# manifolds
 
-LaTeX Template to use when starting a new LaTeX project.
+A study in manifolds

@@ -4,7 +4,7 @@
 
 # Master list of stems of tex files in the project.
 # This should be in order.
-LIST_STEMS = project
+LIST_STEMS = topological-manifolds smooth-manifolds riemannian-manifolds
 
 # Add index and fdl to get index and license latexed as well.
 LIST_FDL = $(LIST_STEMS) fdl index
