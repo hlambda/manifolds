@@ -68,11 +68,11 @@ pdfs: $(FOOS) $(BARS) $(PDFS)
 
 # Automatically generated tex files
 tmp/index.tex: *.tex
-	python ./scripts/make_index.py "$(CURDIR)" > tmp/index.tex
+	python2 ./scripts/make_index.py "$(CURDIR)" > tmp/index.tex
 	@echo "Generate index file"
 
 tmp/book.tex: *.tex tmp/index.tex
-	python ./scripts/make_book.py "$(CURDIR)" > tmp/book.tex
+	python2 ./scripts/make_book.py "$(CURDIR)" > tmp/book.tex
 	@echo "Generate book"
 
 # Creating aux files
