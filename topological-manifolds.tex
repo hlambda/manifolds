@@ -20,6 +20,56 @@
 
 This is a test file which requires a reference to compile correctly. \cite{Maclane}
 
+\section{Topological Spaces}
+\label{section-topological-spaces}
+
+\begin{exercise}
+\label{tm-exercise-2-1}
+
+Show that each of the following is a topological space.
+
+\begin{enumerate}
+\item Let $X$ denote the set $\{1, 2, 3\}$, and declare the open sets to be
+$\{1\}$, $\{2, 3\}$, $\{1, 2, 3\}$, and the empty set.
+\label{tm-exercise-2-1-a}
+\item Any set $X$ whatsoever, with $\tau = \{$ all subsets of $X\}$. This is
+called the {\it discrete topology} on $X$, and $(X, \tau)$ is called the
+{\it discrete space}. \label{tm-exercise-2-1-b}
+\item Any set $X$, with $\tau = \{\emptyset, X\}$. This is called the {\it
+trivial topology} on $X$. \label{tm-exercise-2-1-c}
+\item Any metric space $(M, d)$, with $\tau$ equal to the collection of all
+subsets of $M$ that are open in the metric space sense. This topology is called
+the {\it metric topology} on $M$.\label{tm-exercise-2-1-d}
+\end{enumerate}
+
+\begin{proof}
+
+For Part \ref{tm-exercise-2-1-a}, both $X$ and the empty set are in $\tau$.
+The union of any two elements is in $\tau$, the only case of interest being
+$\{1\} \cup \{2, 3\} = X$. The intersection of any two is in $\tau$: any set
+intersecting the empty set is the empty set and any set intersecting the entire
+space is itself; the only case of interest is $\{1\} \cap \{2, 3\} = \emptyset$.
+
+For Part \ref{tm-exercise-2-1-b}, both $X$ and the empty set are subsets of $X$.
+The union or intersection of any number of subsets of $X$ is again a subset of
+$X$.
+
+For Part \ref{tm-exercise-2-1-c}, both $X$ and the empty set are in $\tau$.
+The union of any two distinct elements is $X$; the intersection of any two
+distinct elements is the empty set.
+
+For Part \ref{tm-exercise-2-1-d}, both $X$ and the empty set are open under the
+metric $d$. If you take the union of any number of open sets, it is again open
+as around any point we can take an open ball around it contained in the open
+set contained in the union. The non empty intersection of any two open sets is
+again open as we can take a point in the intersection and there is an open
+ball containing the point for each open set, we just choose the smaller of the
+two to make sure it is in both.
+
+\end{proof}
+
+\end{exercise}
+
 \input{chapters}
 
 \bibliography{my}
