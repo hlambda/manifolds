@@ -16,9 +16,9 @@ LIST_TAGS = $(LIST_FDL) book
 # In particular: $(patsubst pattern, replacement, text)
 
 # Different extensions
-SOURCES = $(patsubst %, %.tex, $(LIST_STEMS)) # add .tex extensions
+SOURCES = $(patsubst %,%.tex, $(LIST_STEMS)) # add .tex extensions
 
-TAGS = $(patsubst %, tags/tmp/%.tex, $(LIST_TAGS))
+TAGS = $(patsubst %,tags/tmp/%.tex, $(LIST_TAGS))
 
 TAG_EXTRAS = tags/tmp/my.bib tags/tmp/hyperref.cfg \
 	tags/tmp/Makefile tags/tmp/chapters.tex \
@@ -26,12 +26,12 @@ TAG_EXTRAS = tags/tmp/my.bib tags/tmp/hyperref.cfg \
 
 # Question: What are the foo, bar files used for?
 # 	foo is used for aux .tex files and bar is used for aux bbl files.
-FOO_SOURCES = $(patsubst %, %.foo, $(LIST_STEMS))
-FOOS = $(patsubst %, %.foo, $(LIST_FDL))
-BARS = $(patsubst %, %.bar, $(LIST_FDL))
+FOO_SOURCES = $(patsubst %,%.foo, $(LIST_STEMS))
+FOOS = $(patsubst %,%.foo, $(LIST_FDL))
+BARS = $(patsubst %,%.bar, $(LIST_FDL))
 
-PDFS = $(patsubst %, %.pdf, $(LIST_FDL))
-DVIS = $(patsubst %, %.dvi, $(LIST_FDL))
+PDFS = $(patsubst %,%.pdf, $(LIST_FDL))
+DVIS = $(patsubst %,%.dvi, $(LIST_FDL))
 
 # Be careful. Files in INSTALLDIR will be overwritten!
 INSTALLDIR =
@@ -83,7 +83,6 @@ index.foo: tmp/index.tex
 	$(FOO_LATEX) tmp/index
 	touch index.foo
 	@echo "Generate aux index file"
-
 
 book.foo: tmp/book.tex
 	$(FOO_LATEX) tmp/book
@@ -150,27 +149,35 @@ book.dvi: tmp/book.tex book.bar
 #
 #
 tags/tmp/book.tex: tmp/book.tex tags/tags
+	@echo "Creating tags for book.tex"
 	python ./scripts/tag_up.py "$(CURDIR)" book > tags/tmp/book.tex
 
 tags/tmp/index.tex: tmp/index.tex
+	@echo "Copying index.tex for tagging"
 	cp tmp/index.tex tags/tmp/index.tex
 
 tags/tmp/preamble.tex: preamble.tex tags/tags
+	@echo "Creating tags for preamble.tex"
 	python ./scripts/tag_up.py "$(CURDIR)" preamble > tags/tmp/preamble.tex
 
 tags/tmp/chapters.tex: chapters.tex
+	@echo "Copying chapters.tex for tagging"
 	cp chapters.tex tags/tmp/chapters.tex
 
 tags/tmp/%.tex: %.tex tags/tags
+	@echo "Creating tags for ... tex file"
 	python ./scripts/tag_up.py "$(CURDIR)" $* > tags/tmp/$*.tex
 
 tags/tmp/hyperref.cfg: hyperref.cfg
+	@echo "Copying hyperref.cfg for tagging"
 	cp hyperref.cfg tags/tmp/hyperref.cfg
 
 tags/tmp/my.bib: my.bib
+	@echo "Copying my.bib for tagging"
 	cp my.bib tags/tmp/my.bib
 
 tags/tmp/Makefile: tags/Makefile
+	@echo "Copying tags/Makefile for tagging"
 	cp tags/Makefile tags/tmp/Makefile
 
 # Target dealing with tags
@@ -212,8 +219,8 @@ clean:
 	rm -f manifolds-project.tar.bz2
 	@echo "Cleaning project"
 
-#.PHONY: distclean
-#distclean: clean tags_clean
+.PHONY: distclean
+distclean: clean tags_clean
 
 .PHONY: backup
 backup:
