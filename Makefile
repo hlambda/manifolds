@@ -17,9 +17,10 @@ LIST_TAGS = $(LIST_FDL) book
 
 # Different extensions
 SOURCES = $(patsubst %, %.tex, $(LIST_STEMS)) # add .tex extensions
+
 TAGS = $(patsubst %, tags/tmp/%.tex, $(LIST_TAGS))
 
-TAG_EXTRAS = tags/tmp/my.bib \
+TAG_EXTRAS = tags/tmp/my.bib tags/tmp/hyperref.cfg \
 	tags/tmp/Makefile tags/tmp/chapters.tex \
 	tags/tmp/preamble.tex tags/tmp/bibliography.tex
 
@@ -39,6 +40,8 @@ INSTALLDIR =
 LATEX := latex -src
 
 PDFLATEX := pdflatex
+
+FOO_LATEX := $(LATEX)
 
 # Currently the default target runs latex once for each updated tex file.
 # This is what you want if you are just editing a single tex file and want
@@ -77,18 +80,18 @@ tmp/book.tex: *.tex tmp/index.tex
 
 # Creating aux files
 index.foo: tmp/index.tex
-	$(LATEX) tmp/index
+	$(FOO_LATEX) tmp/index
 	touch index.foo
 	@echo "Generate aux index file"
 
 
 book.foo: tmp/book.tex
-	$(LATEX) tmp/book
+	$(FOO_LATEX) tmp/book
 	touch book.foo
 	@echo "Generate aux book file"
 
 %.foo: %.tex
-	$(LATEX) $*
+	$(FOO_LATEX) $*
 	touch $*.foo
 	@echo "Creating aux files"
 
@@ -146,61 +149,56 @@ book.dvi: tmp/book.tex book.bar
 # Tags stuff
 #
 #
-#tags/tmp/book.tex: tmp/book.tex tags/tags
-#	python ./scripts/tag_up.py "$(CURDIR)" book > tags/tmp/book.tex
-#
-#tags/tmp/index.tex: tmp/index.tex
-#	cp tmp/index.tex tags/tmp/index.tex
-#
-#tags/tmp/preamble.tex: preamble.tex tags/tags
-#	python ./scripts/tag_up.py "$(CURDIR)" preamble > tags/tmp/preamble.tex
-#
-#tags/tmp/chapters.tex: chapters.tex
-#	cp chapters.tex tags/tmp/chapters.tex
-#
-#tags/tmp/%.tex: %.tex tags/tags
-#	python ./scripts/tag_up.py "$(CURDIR)" $* > tags/tmp/$*.tex
-#
-#tags/tmp/stacks-project.cls: stacks-project.cls
-#	cp stacks-project.cls tags/tmp/stacks-project.cls
-#
-#tags/tmp/stacks-project-book.cls: stacks-project-book.cls
-#	cp stacks-project-book.cls tags/tmp/stacks-project-book.cls
-#
-#tags/tmp/hyperref.cfg: hyperref.cfg
-#	cp hyperref.cfg tags/tmp/hyperref.cfg
-#
-#tags/tmp/my.bib: my.bib
-#	cp my.bib tags/tmp/my.bib
-#
-#tags/tmp/Makefile: tags/Makefile
-#	cp tags/Makefile tags/tmp/Makefile
-#
-## Target dealing with tags
-#.PHONY: tags
-#tags: $(TAGS) $(TAG_EXTRAS)
-#	@echo "TAGS TARGET"
-#	$(MAKE) -C tags/tmp
-#
-#.PHONY: tags_install
-#tags_install: tags tarball
-#ifndef INSTALLDIR
-#	@echo "%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%"
-#	@echo "% Set INSTALLDIR value in the Makefile!               %"
-#	@echo "%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%"
-#else
-#	cp tags/tmp/*.pdf $(INSTALLDIR)
-#	tar -c -f $(INSTALLDIR)/stacks-pdfs.tar --exclude book.pdf --transform=s@tags/tmp@stacks-pdfs@ tags/tmp/*.pdf
-#	git archive --format=tar HEAD | (cd $(INSTALLDIR) && tar xf -)
-#	cp stacks-project.tar.bz2 $(INSTALLDIR)
-#	git log --pretty=oneline -1 > $(INSTALLDIR)/VERSION
-#endif
-#
-#.PHONY: tags_clean
-#tags_clean:
-#	rm -f tags/tmp/*
-#	rm -f tmp/book.tex tmp/index.tex
-#	rm -f stacks-project.tar.bz2
+tags/tmp/book.tex: tmp/book.tex tags/tags
+	python ./scripts/tag_up.py "$(CURDIR)" book > tags/tmp/book.tex
+
+tags/tmp/index.tex: tmp/index.tex
+	cp tmp/index.tex tags/tmp/index.tex
+
+tags/tmp/preamble.tex: preamble.tex tags/tags
+	python ./scripts/tag_up.py "$(CURDIR)" preamble > tags/tmp/preamble.tex
+
+tags/tmp/chapters.tex: chapters.tex
+	cp chapters.tex tags/tmp/chapters.tex
+
+tags/tmp/%.tex: %.tex tags/tags
+	python ./scripts/tag_up.py "$(CURDIR)" $* > tags/tmp/$*.tex
+
+tags/tmp/hyperref.cfg: hyperref.cfg
+	cp hyperref.cfg tags/tmp/hyperref.cfg
+
+tags/tmp/my.bib: my.bib
+	cp my.bib tags/tmp/my.bib
+
+tags/tmp/Makefile: tags/Makefile
+	cp tags/Makefile tags/tmp/Makefile
+
+# Target dealing with tags
+.PHONY: tags
+tags: $(TAGS) $(TAG_EXTRAS)
+	@echo "TAGS TARGET"
+	$(MAKE) -C tags/tmp
+
+.PHONY: tags_install
+tags_install: tags tarball
+ifndef INSTALLDIR
+	@echo "%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%"
+	@echo "% Set INSTALLDIR value in the Makefile!               %"
+	@echo "%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%"
+else
+	cp tags/tmp/*.pdf $(INSTALLDIR)
+	tar -c -f $(INSTALLDIR)/manifolds-pdfs.tar --exclude book.pdf --transform=s@tags/tmp@manifolds-pdfs@ tags/tmp/*.pdf
+	git archive --format=tar HEAD | (cd $(INSTALLDIR) && tar xf -)
+	cp manifolds-project.tar.bz2 $(INSTALLDIR)
+	git log --pretty=oneline -1 > $(INSTALLDIR)/VERSION
+endif
+
+.PHONY: tags_clean
+tags_clean:
+	rm -f tags/tmp/*
+	rm -f tmp/book.tex tmp/index.tex
+	rm -f manifolds-project.tar.bz2
+
 
 # Additional targets
 .PHONY: book
@@ -211,7 +209,7 @@ book: book.foo book.bar book.dvi book.pdf
 clean:
 	rm -f *.aux *.bbl *.blg *.dvi *.log *.pdf *.ps *.out *.toc *.foo *.bar *.pyc
 	rm -f tmp/book.tex tmp/index.tex
-	rm -f project.tar.bz2
+	rm -f manifolds-project.tar.bz2
 	@echo "Cleaning project"
 
 #.PHONY: distclean
@@ -225,7 +223,7 @@ backup:
 
 .PHONY: tarball
 tarball:
-	git archive --prefix=project/ HEAD | bzip2 > project.tar.bz2
+	git archive --prefix=project/ HEAD | bzip2 > manifolds-project.tar.bz2
 	@echo "Creating tarball"
 
 # Target which makes all dvis and all pdfs, as well as the tarball

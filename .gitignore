@@ -114,6 +114,7 @@ _minted*
 *.sout
 *.sympy
 sympy-plots-for-*.tex/
+.pyc
 
 # todonotes
 *.tdo

@@ -29,6 +29,8 @@ A math.SE chat for the reading group is located
 A subreddit for the reading group is located
 [here](https://www.reddit.com/r/DGReading).
 
+A hack.chat for the reading group is located
+[here](https://hack.chat/?DGReading).
 
 ---
 
