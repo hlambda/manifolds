@@ -21,6 +21,7 @@ SOURCES = $(patsubst %,%.tex, $(LIST_STEMS)) # add .tex extensions
 TAGS = $(patsubst %,tags/tmp/%.tex, $(LIST_TAGS))
 
 TAG_EXTRAS = tags/tmp/my.bib tags/tmp/hyperref.cfg \
+  tags/tmp/latex-project.cls tags/tmp/latex-project-book.cls \
 	tags/tmp/Makefile tags/tmp/chapters.tex \
 	tags/tmp/preamble.tex tags/tmp/bibliography.tex
 
@@ -167,6 +168,12 @@ tags/tmp/chapters.tex: chapters.tex
 tags/tmp/%.tex: %.tex tags/tags
 	@echo "Creating tags for ... tex file"
 	python ./scripts/tag_up.py "$(CURDIR)" $* > tags/tmp/$*.tex
+
+tags/tmp/slatex-project.cls: latex-project.cls
+  cp latex-project.cls tags/tmp/latex-project.cls
+
+tags/tmp/latex-project-book.cls: latex-project-book.cls
+	cp latex-project-book.cls tags/tmp/latex-project-book.cls
 
 tags/tmp/hyperref.cfg: hyperref.cfg
 	@echo "Copying hyperref.cfg for tagging"

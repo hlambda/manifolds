@@ -18,13 +18,13 @@ TMPD=`mktemp -d --tmpdir=$SPD/tmp`
 
 # Symbolically link files that are hopefully not modified during process
 ln -s $SPD/preamble.tex $SPD/chapters.tex $SPD/hyperref.cfg \
-	$SPD/$STEM.tex $TMPD
+	$SPD/latex-project.cls $SPD/$STEM.tex $TMPD
 
 # Exceptional cases
 if [ "$STEM" == "tmp/index" ]; then STEM="index"; fi
 if [ "$STEM" == "tmp/book" ]; then
 	STEM="book";
-	#ln -s $SPD/stacks-project-book.cls $TMPD;
+	ln -s $SPD/latex-project-book.cls $TMPD;
 fi
 
 # Link to bibliography file

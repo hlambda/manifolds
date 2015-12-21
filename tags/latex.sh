@@ -19,11 +19,11 @@ cp $STEM.toc $TMPD
 
 # 	Different
 if [ "$STEM" == "book" ]; then
-	#ln -s $OLD/stacks-project-book.cls $TMPD;
+	ln -s $OLD/latex-project-book.cls $TMPD;
 	cp book.aux $TMPD
 else
 	ln -s $OLD/preamble.tex $OLD/chapters.tex $TMPD; #\
-		#$OLD/stacks-project.cls $TMPD;
+		$OLD/latex-project.cls $TMPD;
 	cp *.aux $TMPD
 fi
 
