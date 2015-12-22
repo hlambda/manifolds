@@ -151,7 +151,7 @@ book.dvi: tmp/book.tex book.bar
 #
 tags/tmp/book.tex: tmp/book.tex tags/tags
 	@echo "Creating tags for book.tex"
-	python ./scripts/tag_up.py "$(CURDIR)" book > tags/tmp/book.tex
+	python2 ./scripts/tag_up.py "$(CURDIR)" book > tags/tmp/book.tex
 
 tags/tmp/index.tex: tmp/index.tex
 	@echo "Copying index.tex for tagging"
@@ -159,7 +159,7 @@ tags/tmp/index.tex: tmp/index.tex
 
 tags/tmp/preamble.tex: preamble.tex tags/tags
 	@echo "Creating tags for preamble.tex"
-	python ./scripts/tag_up.py "$(CURDIR)" preamble > tags/tmp/preamble.tex
+	python2 ./scripts/tag_up.py "$(CURDIR)" preamble > tags/tmp/preamble.tex
 
 tags/tmp/chapters.tex: chapters.tex
 	@echo "Copying chapters.tex for tagging"
@@ -167,7 +167,7 @@ tags/tmp/chapters.tex: chapters.tex
 
 tags/tmp/%.tex: %.tex tags/tags
 	@echo "Creating tags for ... tex file"
-	python ./scripts/tag_up.py "$(CURDIR)" $* > tags/tmp/$*.tex
+	python2 ./scripts/tag_up.py "$(CURDIR)" $* > tags/tmp/$*.tex
 
 tags/tmp/latex-project.cls: latex-project.cls
 	cp latex-project.cls tags/tmp/latex-project.cls
