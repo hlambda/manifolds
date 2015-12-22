@@ -22,7 +22,7 @@ if [ "$STEM" == "book" ]; then
 	ln -s $OLD/latex-project-book.cls $TMPD;
 	cp book.aux $TMPD
 else
-	ln -s $OLD/preamble.tex $OLD/chapters.tex $TMPD; #\
+	ln -s $OLD/preamble.tex $OLD/chapters.tex \
 		$OLD/latex-project.cls $TMPD;
 	cp *.aux $TMPD
 fi

@@ -1,7 +1,7 @@
 % Edited version of amsbook.cls
 \NeedsTeXFormat{LaTeX2e}% LaTeX 2.09 can't be used (nor non-LaTeX)
 [1995/06/01]% LaTeX date must be June 1995 or later
-\ProvidesClass{stacks-project-book}
+\ProvidesClass{latex-project-book}
 \global\expandafter\let\csname ver@amsthm.sty\expandafter\endcsname
   \csname ver@\@currname.\@currext\endcsname
 \let\@xp=\expandafter
